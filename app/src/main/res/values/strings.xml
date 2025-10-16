@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Controle+</string>
+    <string name="title_homescreen">Finances</string>
+    <string name="incomes_totalincomeexpenseboxcomponent">Incomes</string>
+    <string name="expenses_totalincomeexpenseboxcomponent">Expenses</string>
+    <string name="balances_totalincomeexpenseboxcomponent">Balance</string>
+    <string name="title_addordersscreen">New Order</string>
+    <string name="hint_amount_addordersscreen">Value:</string>
+    <string name="hint_category_addordersscreen">Categoy: Salary, Rent</string>
+    <string name="title_typesection_addordersscreen">
+        Type
+    </string>
+    <string name="incomebutton_typesection_addordersscreen">
+        Income
+    </string>
+    <string name="expensebutton_typesection_addordersscreen">
+        Expense
+    </string>
+</resources>

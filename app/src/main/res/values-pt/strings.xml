@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Controle+</string>
+    <string name="title_homescreen">Finanças</string>
+    <string name="incomes_totalincomeexpenseboxcomponent">Entradas</string>
+    <string name="expenses_totalincomeexpenseboxcomponent">Despesas</string>
+    <string name="balances_totalincomeexpenseboxcomponent">Saldo</string>
+    <string name="title_addordersscreen">Nova Ordem</string>
+    <string name="hint_amount_addordersscreen">Valor:</string>
+    <string name="hint_category_addordersscreen">Categoria: Salário, Aluguel</string>
+    <string name="title_typesection_addordersscreen">
+        Tipo
+    </string>
+    <string name="incomebutton_typesection_addordersscreen">
+        Entrada
+    </string>
+    <string name="expensebutton_typesection_addordersscreen">
+        Saída
+    </string>
+</resources>
