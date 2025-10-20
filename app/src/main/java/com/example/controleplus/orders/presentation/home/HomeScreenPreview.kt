@@ -77,10 +77,11 @@ fun HomeScreenPreview() {
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier.padding(top = 25.dp)
             )
-            Spacer(modifier = Modifier.height(175.dp))
             Row(
                 horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 150.dp),
             ) {
                 TotalIncomeExpenseBox(
                     "balance",
