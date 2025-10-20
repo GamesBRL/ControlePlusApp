@@ -2,19 +2,32 @@
 <resources>
     <string name="app_name">Controle+</string>
     <string name="title_homescreen">Finanças</string>
-    <string name="incomes_totalincomeexpenseboxcomponent">Entradas</string>
-    <string name="expenses_totalincomeexpenseboxcomponent">Despesas</string>
-    <string name="balances_totalincomeexpenseboxcomponent">Saldo</string>
+    <string name="income_plural">Entradas</string>
+    <string name="expense_plural">Despesas</string>
+    <string name="balance_singular">Saldo</string>
     <string name="title_addordersscreen">Nova Ordem</string>
     <string name="hint_amount_addordersscreen">Valor:</string>
     <string name="hint_category_addordersscreen">Categoria: Salário, Aluguel</string>
-    <string name="title_typesection_addordersscreen">
+    <string name="type_word">
         Tipo
     </string>
-    <string name="incomebutton_typesection_addordersscreen">
+    <string name="income_singular">
         Entrada
     </string>
-    <string name="expensebutton_typesection_addordersscreen">
+    <string name="expense_singular">
         Saída
     </string>
+    <string name="all_word">
+        Todos
+    </string>
+    <string name="title_orders">Ordens</string>
+    <string name="order_word">Ordem</string>
+    <string name="date_word">Data</string>
+    <string name="category_word">Categoria</string>
+    <string name="amount_word">Quantidade</string>
+    <string name="select_date">Selecione Data</string>
+    <string name="select_initial_date">Selecione a Data Inicial</string>
+    <string name="select_final_date">Selecione a Data Final</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="next_button">Próximo</string>
 </resources>

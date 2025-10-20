@@ -1,19 +1,32 @@
 <resources>
     <string name="app_name">Controle+</string>
     <string name="title_homescreen">Finances</string>
-    <string name="incomes_totalincomeexpenseboxcomponent">Incomes</string>
-    <string name="expenses_totalincomeexpenseboxcomponent">Expenses</string>
-    <string name="balances_totalincomeexpenseboxcomponent">Balance</string>
+    <string name="income_plural">Incomes</string>
+    <string name="expense_plural">Expenses</string>
+    <string name="balance_singular">Balance</string>
     <string name="title_addordersscreen">New Order</string>
     <string name="hint_amount_addordersscreen">Value:</string>
     <string name="hint_category_addordersscreen">Categoy: Salary, Rent</string>
-    <string name="title_typesection_addordersscreen">
+    <string name="type_word">
         Type
     </string>
-    <string name="incomebutton_typesection_addordersscreen">
+    <string name="income_singular">
         Income
     </string>
-    <string name="expensebutton_typesection_addordersscreen">
+    <string name="expense_singular">
         Expense
     </string>
+    <string name="all_word">
+        All
+    </string>
+    <string name="title_orders">Orders</string>
+    <string name="order_word">Order</string>
+    <string name="date_word">Date</string>
+    <string name="category_word">Category</string>
+    <string name="amount_word">Amount</string>
+    <string name="select_date">Select Date</string>
+    <string name="select_initial_date">Select Initial Date</string>
+    <string name="select_final_date">Select Final Date</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="next_button">Next</string>
 </resources>
