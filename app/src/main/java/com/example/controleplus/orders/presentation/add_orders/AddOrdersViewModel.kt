@@ -12,10 +12,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
 import javax.inject.Inject
 
-private const val MAX_CATEGORY_LENGTH = 12
+private const val MAX_CATEGORY_LENGTH = 25
 
 @HiltViewModel
 class AddOrdersViewModel @Inject constructor(
@@ -34,9 +33,12 @@ class AddOrdersViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    //Função de eventos
     fun onEvent(event: AddOrdersEvent) {
         when (event) {
 
+            //Evento que altera o valor no campo de texto, permitindo apenas números,
+            //e exibindo já no formato da moeda local
             is AddOrdersEvent.EnteredAmount -> {
                 val digitsOnly = event.value.filter { it.isDigit() }
                 val doubleValue = if (digitsOnly.isNotEmpty()) digitsOnly.toDouble() / 100 else 0.0
@@ -52,15 +54,16 @@ class AddOrdersViewModel @Inject constructor(
                 }
             }
 
+            //Evento que retira a dica ao clickar no campo Amount
             is AddOrdersEvent.ChangeAmountFocus -> {
                 _orderAmount.value = orderAmount.value.copy(
                     isHintVisible = !event.focusState.isFocused && orderAmount.value.text.isBlank()
                 )
             }
 
+            //Evento que altera o valor no campo de texto da categoria, com limite de caracteres
             is AddOrdersEvent.EnteredCategory -> {
                 val newText = event.value.take(MAX_CATEGORY_LENGTH)
-                    .trim()
                     .split("\\s+".toRegex())
                     .joinToString(" ") { it.replaceFirstChar { char -> char.uppercaseChar() } }
                 _orderCategory.value = orderCategory.value.copy(
@@ -68,16 +71,19 @@ class AddOrdersViewModel @Inject constructor(
                 )
             }
 
+            //Evento que retira a dica ao clickar no campo Category
             is AddOrdersEvent.ChangeCategoryFocus -> {
                 _orderCategory.value = orderCategory.value.copy(
                     isHintVisible = !event.focusState.isFocused && orderCategory.value.text.isBlank()
                 )
             }
 
+            //Evento que muda TIPO, entrada ou despesa
             is AddOrdersEvent.ChangeType -> {
                 _orderType.value = event.value
             }
 
+            //Evento que salva a ORDEM
             is AddOrdersEvent.SaveOrder -> {
                 viewModelScope.launch {
                     try {
@@ -86,7 +92,7 @@ class AddOrdersViewModel @Inject constructor(
                                 amount = CurrencyUtils.parseCurrencyToDouble(orderAmount.value.text),
                                 category = orderCategory.value.text,
                                 type = orderType.value,
-                                date = LocalDateTime.now(),
+                                date = System.currentTimeMillis(),
                             )
                         )
                         _eventFlow.emit(UiEvent.SaveOrder)

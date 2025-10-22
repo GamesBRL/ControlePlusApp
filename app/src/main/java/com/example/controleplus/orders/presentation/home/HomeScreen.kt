@@ -2,12 +2,11 @@ package com.example.controleplus.orders.presentation.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -81,34 +80,41 @@ fun HomeScreen(
                 text = stringResource(R.string.title_homescreen),
                 color = White2,
                 style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(top = 25.dp)
+                modifier = Modifier.padding(top = 20.dp, bottom = 20.dp)
             )
-            Spacer(modifier = Modifier.height(175.dp))
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth(),
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
             ) {
-                TotalIncomeExpenseBox(
-                    "balance",
-                    value.totalBalance,
-                    modifier = Modifier.size(135.dp)
-                )
-            }
-            Spacer(modifier = Modifier.height(30.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                TotalIncomeExpenseBox(
-                    "income",
-                    value.totalIncome,
-                    modifier = Modifier.size(135.dp)
-                )
-                TotalIncomeExpenseBox(
-                    "expense",
-                    value.totalExpense,
-                    modifier = Modifier.size(135.dp)
-                )
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 235.dp)
+                ) {
+                    TotalIncomeExpenseBox(
+                        "balance",
+                        value.totalBalance,
+                        modifier = Modifier.size(135.dp)
+                    )
+                }
+                Row(
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 85.dp)
+                ) {
+                    TotalIncomeExpenseBox(
+                        "income",
+                        value.totalIncome,
+                        modifier = Modifier.size(135.dp)
+                    )
+                    TotalIncomeExpenseBox(
+                        "expense",
+                        value.totalExpense,
+                        modifier = Modifier.size(135.dp)
+                    )
+                }
             }
         }
     }

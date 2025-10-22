@@ -5,8 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.controleplus.core.util.DateFormatter
-import com.example.controleplus.core.util.DateFormatter.atEndOfDay
-import com.example.controleplus.core.util.DateFormatter.atStartOfDay
 import com.example.controleplus.orders.domain.model.Orders
 import com.example.controleplus.orders.domain.use_case.OrdersUseCases
 import com.example.controleplus.orders.domain.util.OrderType
@@ -16,7 +14,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,14 +24,16 @@ class OrdersViewModel @Inject constructor(
     private val _state = mutableStateOf(OrdersState())
     val state: State<OrdersState> = _state
 
-    private var currentDate: LocalDateTime? = null
-    private var currentStartDate: LocalDateTime? = null
-    private var currentEndDate: LocalDateTime? = null
+    //Variáveis de auxilio para os eventos
+    private var currentDate: Long? = null
+    private var currentStartDate: Long? = null
+    private var currentEndDate: Long? = null
 
     private var recentlyDeletedOrder: Orders? = null
 
     private var getOrdersJob: Job? = null
 
+    //As funções abaixo são getters que vão retornar as ORDENS de acordo com os eventos
     private fun getOrders(ordersOrder: OrdersOrder) {
         getOrdersJob?.cancel()
         getOrdersJob = ordersUseCases.getOrders(ordersOrder)
@@ -72,8 +71,8 @@ class OrdersViewModel @Inject constructor(
     }
 
     private fun getOrdersBetweenDates(
-        startDate: LocalDateTime,
-        endDate: LocalDateTime,
+        startDate: Long,
+        endDate: Long,
         ordersOrder: OrdersOrder
     ) {
         getOrdersJob?.cancel()
@@ -89,8 +88,8 @@ class OrdersViewModel @Inject constructor(
     }
 
     private fun getIncomeOrdersBetweenDates(
-        startDate: LocalDateTime,
-        endDate: LocalDateTime,
+        startDate: Long,
+        endDate: Long,
         ordersOrder: OrdersOrder
     ) {
         getOrdersJob?.cancel()
@@ -106,8 +105,8 @@ class OrdersViewModel @Inject constructor(
     }
 
     private fun getExpenseOrdersBetweenDates(
-        startDate: LocalDateTime,
-        endDate: LocalDateTime,
+        startDate: Long,
+        endDate: Long,
         ordersOrder: OrdersOrder
     ) {
         getOrdersJob?.cancel()
@@ -122,13 +121,15 @@ class OrdersViewModel @Inject constructor(
                 .launchIn(viewModelScope)
     }
 
+    //Esta função garante que, caso haja algum filtro de Data(intervalo ou único, respeite outros filtros de Ordenação
+    //sem limpar o filtro de Data(intervalo ou único) existente
     private fun reloadOrdersWithCurrentFilters(ordersOrder: OrdersOrder = state.value.ordersOrder) {
         val order = ordersOrder
 
         when {
             currentStartDate != null && currentEndDate != null -> {
-                val start = currentStartDate!!.atStartOfDay()
-                val end = currentEndDate!!.atEndOfDay()
+                val start = currentStartDate!!
+                val end = currentEndDate!!
 
                 when (state.value.selectedType) {
                     "income" -> getIncomeOrdersBetweenDates(start, end, order)
@@ -138,8 +139,8 @@ class OrdersViewModel @Inject constructor(
             }
 
             currentDate != null -> {
-                val start = currentDate!!.atStartOfDay()
-                val end = currentDate!!.atEndOfDay()
+                val start = currentDate!!
+                val end = currentDate!!
 
                 when (state.value.selectedType) {
                     "income" -> getIncomeOrdersBetweenDates(start, end, order)
@@ -158,14 +159,17 @@ class OrdersViewModel @Inject constructor(
         }
     }
 
-
+    //Inicialmente a lista de ORDENS exibidas será por padrão a data em ordem decrescente,
+    //ou seja, após o usuário concluir a adição da ORDEM, ela será exibida no topo da lista
     init {
         getOrders(OrdersOrder.Date(OrderType.Descending))
     }
 
+    //Eventos que serão ativados na camada de View
     fun onEvent(event: OrdersEvent) {
         when (event) {
 
+            //Evento que retorna as ORDENS de acordo com os filtros de Ordenação
             is OrdersEvent.Order -> {
                 val order = event.ordersOrder
 
@@ -181,21 +185,25 @@ class OrdersViewModel @Inject constructor(
                 reloadOrdersWithCurrentFilters(order)
             }
 
+            //Evento que carrega as ORDENS de todos os TIPOS
             is OrdersEvent.LoadAll -> {
                 _state.value = state.value.copy(selectedType = "all")
                 reloadOrdersWithCurrentFilters(OrdersOrder.Date(OrderType.Descending))
             }
 
+            //Evento que carrega as ORDENS do TIPO entrada
             is OrdersEvent.LoadIncome -> {
                 _state.value = state.value.copy(selectedType = "income")
                 reloadOrdersWithCurrentFilters(OrdersOrder.Date(OrderType.Descending))
             }
 
+            //Evento que carrega as ORDENS do TIPO despesa
             is OrdersEvent.LoadExpense -> {
                 _state.value = state.value.copy(selectedType = "expense")
                 reloadOrdersWithCurrentFilters(OrdersOrder.Date(OrderType.Descending))
             }
 
+            //Evento que limpa os filtros de Data(intervalo ou único) existentes
             is OrdersEvent.ClearDateFilters -> {
                 currentDate = null
                 currentStartDate = null
@@ -208,6 +216,8 @@ class OrdersViewModel @Inject constructor(
                 reloadOrdersWithCurrentFilters(state.value.ordersOrder)
             }
 
+            //Evento que filtra as ORDENS por data, no caso, uma unica data
+            //respeitando o filtro por TIPO
             is OrdersEvent.LoadByDate -> {
                 currentDate = event.date
                 _state.value = state.value.copy(
@@ -216,8 +226,8 @@ class OrdersViewModel @Inject constructor(
                     formattedEndDate = ""
                 )
 
-                val start = event.date.atStartOfDay()
-                val end = event.date.atEndOfDay()
+                val start = event.date
+                val end = event.date
 
                 when (state.value.selectedType) {
                     "income" -> getIncomeOrdersBetweenDates(
@@ -240,6 +250,7 @@ class OrdersViewModel @Inject constructor(
                 }
             }
 
+            //Evento que filtra as ORDENS por intervalo de datas, respeitando o filtro por TIPO
             is OrdersEvent.LoadBetweenDates -> {
                 currentDate = null
                 currentStartDate = event.startDate
@@ -251,8 +262,8 @@ class OrdersViewModel @Inject constructor(
                     formattedCurrentDate = ""
                 )
 
-                val start = event.startDate.atStartOfDay()
-                val end = event.endDate.atEndOfDay()
+                val start = event.startDate
+                val end = event.endDate
 
                 when (state.value.selectedType) {
                     "income" -> getIncomeOrdersBetweenDates(
@@ -275,6 +286,7 @@ class OrdersViewModel @Inject constructor(
                 }
             }
 
+            //Evento que alterna os tipos de Ordenação, Crescente e Decrescente
             is OrdersEvent.ToggleOrderType -> {
                 val newOrderType = if (state.value.ordersOrder.orderType is OrderType.Ascending) {
                     OrderType.Descending
@@ -294,6 +306,7 @@ class OrdersViewModel @Inject constructor(
                 reloadOrdersWithCurrentFilters(newOrder)
             }
 
+            //Evento que deleta a ORDEM selecionada
             is OrdersEvent.DeleteOrders -> {
                 viewModelScope.launch {
                     ordersUseCases.deleteOrders(event.orders)
@@ -301,6 +314,8 @@ class OrdersViewModel @Inject constructor(
                 }
             }
 
+            //Evento que restaura a ORDEM mais recente deletada
+            //apenas a última ORDEM deletada pode ser restaurada
             is OrdersEvent.RestoreOrders -> {
                 viewModelScope.launch {
                     ordersUseCases.addOrders(recentlyDeletedOrder ?: return@launch)
@@ -308,18 +323,21 @@ class OrdersViewModel @Inject constructor(
                 }
             }
 
+            //Evento que alterna a visualização do campo de seleção de TIPO
             is OrdersEvent.ToggleTypeSection -> {
                 _state.value = state.value.copy(
                     isTypeSectionVisible = !state.value.isTypeSectionVisible
                 )
             }
 
+            //Evento que alterna a visualização do campo de seleção de Ordenação
             is OrdersEvent.ToggleOrderSection -> {
                 _state.value = state.value.copy(
                     isOrderSectionVisible = !state.value.isOrderSectionVisible
                 )
             }
 
+            //Evento que permite visualizar o DatePicker
             is OrdersEvent.ToggleDateSection -> {
                 _state.value = state.value.copy(
                     isDateSectionVisible = !state.value.isDateSectionVisible

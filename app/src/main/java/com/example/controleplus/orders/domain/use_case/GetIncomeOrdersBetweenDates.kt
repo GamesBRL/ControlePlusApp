@@ -6,7 +6,6 @@ import com.example.controleplus.orders.domain.util.OrderType
 import com.example.controleplus.orders.domain.util.OrdersOrder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import java.time.LocalDateTime
 import kotlin.text.lowercase
 
 class GetIncomeOrdersBetweenDates(
@@ -14,8 +13,8 @@ class GetIncomeOrdersBetweenDates(
 ) {
 
     operator fun invoke(
-        startDate: LocalDateTime,
-        endDate: LocalDateTime,
+        startDate: Long,
+        endDate: Long,
         ordersOrder: OrdersOrder = OrdersOrder.Date(OrderType.Descending)
     ): Flow<List<Orders>> {
         return repository.getIncomeOrdersBetweenDates(startDate, endDate).map { orders ->

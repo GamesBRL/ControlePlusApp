@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.example.controleplus.ui.theme.LightGray
 import com.example.controleplus.ui.theme.White2
 
+//Este componente é um botão radial reutilizável, de design próprio do projeto
 @Composable
 fun DefaultRadioButton(
     text: String,

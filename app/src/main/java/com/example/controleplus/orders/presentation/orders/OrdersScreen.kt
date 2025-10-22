@@ -49,7 +49,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.controleplus.R
 import com.example.controleplus.core.components.BottomNavigationBar
-import com.example.controleplus.core.util.DateFormatter
 import com.example.controleplus.core.util.bottomNavItems
 import com.example.controleplus.orders.domain.util.OrdersOrder
 import com.example.controleplus.orders.presentation.orders.components.DateSelector
@@ -94,9 +93,8 @@ fun OrdersScreen(
                 stringResource(R.string.title_orders),
                 color = White2,
                 style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(top = 25.dp)
+                modifier = Modifier.padding(top = 20.dp, bottom = 20.dp)
             )
-            Spacer(modifier = Modifier.height(50.dp))
             Row(
                 horizontalArrangement = Arrangement.SpaceAround,
                 modifier = Modifier.fillMaxWidth(),
@@ -318,8 +316,7 @@ fun OrdersScreen(
                                         viewModel.onEvent(OrdersEvent.RestoreOrders)
                                     }
                                 }
-                            },
-                            modifier = Modifier.height(60.dp)
+                            }
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                     }
@@ -330,18 +327,15 @@ fun OrdersScreen(
     if (state.isDateSectionVisible) {
         DateSelector(
             onDateRangeSelected = { (start, end) ->
-                if (end != null) {
+                if (end != null && start != null) {
+                    val endOfDay = end + (24 * 60 * 60 * 1000) - 1
+
                     viewModel.onEvent(
-                        OrdersEvent.LoadBetweenDates(
-                            DateFormatter.longToLocalDateTime(start),
-                            DateFormatter.longToLocalDateTime(end)
-                        )
+                        OrdersEvent.LoadBetweenDates(start, endOfDay)
                     )
-                } else {
+                } else if (start != null) {
                     viewModel.onEvent(
-                        OrdersEvent.LoadByDate(
-                            DateFormatter.longToLocalDateTime(start)
-                        )
+                        OrdersEvent.LoadByDate(start)
                     )
                 }
             },

@@ -26,6 +26,7 @@ fun BottomNavigationBar(
         modifier = modifier,
         containerColor = DarkGray
     ) {
+        //Barra de navegação inferior, adiciona automaticamente cada item contido em "NavItems"
         items.forEach { item ->
 
             val selected = currentDestination == item.route

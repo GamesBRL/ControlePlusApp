@@ -23,6 +23,9 @@ class HomeViewModel @Inject constructor(
         loadHomeData()
     }
 
+    //Função que agrupa todos os valores na variável State,
+    //assim, na HomeScreen será possível acessar todos os valores
+    //já formatados para a moeda local
     private fun loadHomeData() {
         viewModelScope.launch {
             combine(

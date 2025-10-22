@@ -9,7 +9,6 @@ import com.example.controleplus.orders.domain.model.Orders
     entities = [Orders::class],
     version = 1,
 )
-@TypeConverters(LocalDateTimeConverter::class)
 abstract class OrdersDatabase : RoomDatabase() {
 
     abstract val ordersDao: OrdersDao

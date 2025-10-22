@@ -33,10 +33,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -61,7 +57,6 @@ fun OrdersScreenPreview() {
 
     val isTypeSectionVisible = false
     val isOrderSectionVisible = false
-    var showPicker by remember { mutableStateOf(false) }
 
     Scaffold(
         bottomBar = {
@@ -83,9 +78,8 @@ fun OrdersScreenPreview() {
                 "Orders",
                 color = White2,
                 style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(top = 25.dp)
+                modifier = Modifier.padding(top = 25.dp, bottom = 25.dp)
             )
-            Spacer(modifier = Modifier.height(50.dp))
             Row(
                 horizontalArrangement = Arrangement.SpaceAround,
                 modifier = Modifier.fillMaxWidth(),
@@ -224,7 +218,7 @@ fun OrdersScreenPreview() {
                     }
                     Button(
                         colors = ButtonDefaults.buttonColors(LightGray2),
-                        onClick = { showPicker = true }
+                        onClick = { TODO() }
                     ) {
                         Text("Select Date", color = Black)
                         Spacer(modifier = Modifier.width(10.dp))

@@ -2,6 +2,7 @@ package com.example.controleplus.orders.presentation.add_orders
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -44,87 +45,99 @@ fun AddOrdersScreenPreview() {
                 .fillMaxSize()
                 .padding(contentPadding)
         ) {
-            Text("New Order", color = White2, style = MaterialTheme.typography.headlineLarge, modifier = Modifier.padding(top = 25.dp))
-            Spacer(modifier = Modifier.height(150.dp))
-            TransparentHintField(
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                text = "",
-                hint = "Value: $ 0.00",
-                onValueChange = {},
-                onFocusChange = {},
-                modifier = Modifier
-                    .fillMaxWidth(0.75f)
-                    .height(50.dp)
+            Text(
+                "New Order",
+                color = White2,
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier.padding(top = 20.dp, bottom = 20.dp)
             )
-            Spacer(modifier = Modifier.height(50.dp))
-            TransparentHintField(
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                text = "",
-                hint = "Categoy: Salary, Rent",
-                onValueChange = {},
-                onFocusChange = {},
-                modifier = Modifier
-                    .fillMaxWidth(0.75f)
-                    .height(50.dp)
-            )
-            Spacer(modifier = Modifier.height(50.dp))
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth(0.75f)
-                    .clip(RoundedCornerShape(15.dp))
-                    .background(DarkGray)
-                    .padding(15.dp)
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
             ) {
-                Text("Type", color = White2, style = MaterialTheme.typography.headlineSmall)
-                Spacer(modifier = Modifier.height(5.dp))
-                DefaultRadioButton(
-                    modifier = Modifier.align(Alignment.Start)
-                        .padding(start = 65.dp),
-                    text = "Income",
-                    selected = true,
-                    onSelect = {}
+                TransparentHintField(
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    text = "",
+                    hint = "Value: $ 0.00",
+                    onValueChange = {},
+                    onFocusChange = {},
+                    modifier = Modifier
+                        .padding(bottom = 445.dp)
+                        .fillMaxWidth(0.75f)
+                        .height(50.dp)
                 )
-                DefaultRadioButton(
-                    modifier = Modifier.align(Alignment.Start)
-                        .padding(start = 65.dp),
-                    text = "Expense",
-                    selected = false,
-                    onSelect = {}
+                TransparentHintField(
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    text = "",
+                    hint = "Categoy: Salary, Rent",
+                    onValueChange = {},
+                    onFocusChange = {},
+                    modifier = Modifier
+                        .padding(bottom = 280.dp)
+                        .fillMaxWidth(0.75f)
+                        .height(50.dp)
                 )
-            }
-            Spacer(modifier = Modifier.height(50.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceAround,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Button(
-                    onClick = {},
-                    colors = ButtonColors(
-                        containerColor = DarkGray,
-                        contentColor = White2,
-                        disabledContainerColor = DarkGray,
-                        disabledContentColor = White2,
-                    )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth(0.75f)
+                        .clip(RoundedCornerShape(15.dp))
+                        .background(DarkGray)
+                        .padding(15.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Cancel,
-                        contentDescription = "Back Arrow"
+                    Text("Type", color = White2, style = MaterialTheme.typography.headlineSmall)
+                    Spacer(modifier = Modifier.height(5.dp))
+                    DefaultRadioButton(
+                        modifier = Modifier
+                            .align(Alignment.Start)
+                            .padding(start = 65.dp),
+                        text = "Income",
+                        selected = true,
+                        onSelect = {}
+                    )
+                    DefaultRadioButton(
+                        modifier = Modifier
+                            .align(Alignment.Start)
+                            .padding(start = 65.dp),
+                        text = "Expense",
+                        selected = false,
+                        onSelect = {}
                     )
                 }
-                Button(
-                    onClick = {},
-                    colors = ButtonColors(
-                        containerColor = DarkGray,
-                        contentColor = White2,
-                        disabledContainerColor = DarkGray,
-                        disabledContentColor = White2,
-                    )
+                Row(
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 250.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Check,
-                        contentDescription = "Save Button"
-                    )
+                    Button(
+                        onClick = {},
+                        colors = ButtonColors(
+                            containerColor = DarkGray,
+                            contentColor = White2,
+                            disabledContainerColor = DarkGray,
+                            disabledContentColor = White2,
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Cancel,
+                            contentDescription = "Back Arrow"
+                        )
+                    }
+                    Button(
+                        onClick = {},
+                        colors = ButtonColors(
+                            containerColor = DarkGray,
+                            contentColor = White2,
+                            disabledContainerColor = DarkGray,
+                            disabledContentColor = White2,
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = "Save Button"
+                        )
+                    }
                 }
             }
         }

@@ -2,8 +2,8 @@ package com.example.controleplus.orders.domain.repository
 
 import com.example.controleplus.orders.domain.model.Orders
 import kotlinx.coroutines.flow.Flow
-import java.time.LocalDateTime
 
+//Interface do Repositorio de ORDENS, com as funções existentes no DAO
 interface OrdersRepository {
 
     fun getOrders(): Flow<List<Orders>>
@@ -19,18 +19,18 @@ interface OrdersRepository {
     suspend fun getOrdersById(id: Int): Orders?
 
     fun getOrdersBetweenDates(
-        startDate: LocalDateTime,
-        endDate: LocalDateTime
+        startDate: Long,
+        endDate: Long
     ): Flow<List<Orders>>
 
     fun getIncomeOrdersBetweenDates(
-        startDate: LocalDateTime,
-        endDate: LocalDateTime
+        startDate: Long,
+        endDate: Long
     ): Flow<List<Orders>>
 
     fun getExpenseOrdersBetweenDates(
-        startDate: LocalDateTime,
-        endDate: LocalDateTime
+        startDate: Long,
+        endDate: Long
     ): Flow<List<Orders>>
 
     suspend fun insertOrder(order: Orders)

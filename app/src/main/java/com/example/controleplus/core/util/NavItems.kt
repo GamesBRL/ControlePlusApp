@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Home
 
+//Lista de Itens da barra de navegação inferior
 val bottomNavItems = listOf(
     BottomNavigationItem(
         description = "Home",

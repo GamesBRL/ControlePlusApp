@@ -2,7 +2,6 @@ package com.example.controleplus.orders.domain.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.LocalDateTime
 
 @Entity
 data class Orders(
@@ -10,7 +9,7 @@ data class Orders(
     val amount: Double,
     val category: String,
     val type: String,
-    val date: LocalDateTime,
+    val date: Long,
 )
 
 class InvalidOrdersException(message: String): Exception(message)

@@ -42,7 +42,6 @@ import com.example.controleplus.ui.theme.LightGreen
 import com.example.controleplus.ui.theme.Red
 import com.example.controleplus.ui.theme.White2
 import com.example.controleplus.ui.theme.White50percent
-import java.time.LocalDateTime
 
 @Composable
 fun OrderItem(
@@ -51,6 +50,7 @@ fun OrderItem(
     onDeleteClick: () -> Unit
 ) {
 
+    val height = 80.dp
     var stringIcon: String
     var color: Color
     var typeSymbol: String
@@ -75,20 +75,20 @@ fun OrderItem(
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
+                .height(height)
                 .width(30.dp)
-                .height(50.dp)
         ) {
             Text(
                 text = stringIcon,
                 color = color,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.headlineSmall,
             )
         }
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .height(50.dp)
+                .height(height)
                 .width(140.dp)
         ) {
             Text(order.category, color = White2, style = MaterialTheme.typography.bodyLarge)
@@ -101,7 +101,7 @@ fun OrderItem(
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
-                .height(50.dp)
+                .height(height)
                 .width(120.dp)
         ) {
             Text(
@@ -114,8 +114,8 @@ fun OrderItem(
         IconButton(
             onClick = onDeleteClick,
             modifier = Modifier
+                .height(height)
                 .width(60.dp)
-                .height(50.dp)
         ) {
             Icon(
                 Icons.Default.Delete,
@@ -165,7 +165,7 @@ fun OrderItemPreview() {
                             amount = 100000.00,
                             category = "sssssssssssssss",
                             type = "income",
-                            date = LocalDateTime.now()
+                            date = System.currentTimeMillis()
                         ),
                         onDeleteClick = {},
                         modifier = Modifier
@@ -176,9 +176,9 @@ fun OrderItemPreview() {
                         Orders(
                             id = 1,
                             amount = 1000.00,
-                            category = "ASDSDASDASD",
+                            category = "ASDSDASDASDA",
                             type = "expense",
-                            date = LocalDateTime.now()
+                            date = System.currentTimeMillis()
                         ),
                         onDeleteClick = {},
                         modifier = Modifier

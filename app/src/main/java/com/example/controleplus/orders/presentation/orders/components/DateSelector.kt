@@ -35,11 +35,16 @@ fun DateSelector(
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(onClick = {
+                val selected = datePickerState.selectedDateMillis
                 if (step == 1) {
-                    startDateMillis = datePickerState.selectedDateMillis
+                    startDateMillis = selected
                     step = 2
                 } else {
-                    onDateRangeSelected(Pair(startDateMillis, datePickerState.selectedDateMillis))
+                    if (selected != null && startDateMillis != null && selected < startDateMillis!!) {
+                        return@TextButton
+                    }
+
+                    onDateRangeSelected(Pair(startDateMillis, selected))
                     onDismiss()
                 }
             }) {

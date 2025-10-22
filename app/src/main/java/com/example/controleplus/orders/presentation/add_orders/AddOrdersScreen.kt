@@ -2,6 +2,7 @@ package com.example.controleplus.orders.presentation.add_orders
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -85,106 +86,114 @@ fun AddOrdersScreen(
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier.padding(top = 25.dp)
             )
-            Spacer(modifier = Modifier.height(150.dp))
-            TransparentHintField(
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                textStyle = TextStyle(color = White2),
-                text = amountState.text,
-                hint = stringResource(R.string.hint_amount_addordersscreen),
-                onValueChange = {
-                    viewModel.onEvent(AddOrdersEvent.EnteredAmount(it))
-                },
-                onFocusChange = {
-                    viewModel.onEvent(AddOrdersEvent.ChangeAmountFocus(it))
-                },
-                isHintVisible = amountState.isHintVisible,
-                modifier = Modifier
-                    .fillMaxWidth(0.75f)
-                    .height(50.dp)
-            )
-            Spacer(modifier = Modifier.height(50.dp))
-            TransparentHintField(
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                textStyle = TextStyle(color = White2),
-                text = categoryState.text,
-                hint = stringResource(R.string.hint_category_addordersscreen),
-                onValueChange = {
-                    viewModel.onEvent(AddOrdersEvent.EnteredCategory(it))
-                },
-                onFocusChange = {
-                    viewModel.onEvent(AddOrdersEvent.ChangeCategoryFocus(it))
-                },
-                isHintVisible = categoryState.isHintVisible,
-                modifier = Modifier
-                    .fillMaxWidth(0.75f)
-                    .height(50.dp)
-            )
-            Spacer(modifier = Modifier.height(50.dp))
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth(0.75f)
-                    .clip(RoundedCornerShape(15.dp))
-                    .background(DarkGray)
-                    .padding(15.dp)
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
             ) {
-                Text(
-                    text = stringResource(R.string.type_word),
-                    color = White2,
-                    style = MaterialTheme.typography.headlineSmall
-                )
-                Spacer(modifier = Modifier.height(5.dp))
-                DefaultRadioButton(
-                    modifier = Modifier.align(Alignment.Start)
-                        .padding(start = 65.dp),
-                    text = stringResource(R.string.income_singular),
-                    selected = typeState == "income",
-                    onSelect = { viewModel.onEvent(AddOrdersEvent.ChangeType("income")) }
-                )
-                DefaultRadioButton(
-                    modifier = Modifier.align(Alignment.Start)
-                        .padding(start = 65.dp),
-                    text = stringResource(R.string.expense_singular),
-                    selected = typeState == "expense",
-                    onSelect = { viewModel.onEvent(AddOrdersEvent.ChangeType("expense")) }
-                )
-            }
-            Spacer(modifier = Modifier.height(50.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceAround,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Button(
-                    onClick = {
-                        navController.navigateUp()
+                TransparentHintField(
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    textStyle = TextStyle(color = White2),
+                    text = amountState.text,
+                    hint = stringResource(R.string.hint_amount_addordersscreen),
+                    onValueChange = {
+                        viewModel.onEvent(AddOrdersEvent.EnteredAmount(it))
                     },
-                    colors = ButtonColors(
-                        containerColor = DarkGray,
-                        contentColor = White2,
-                        disabledContainerColor = DarkGray,
-                        disabledContentColor = White2,
-                    )
+                    onFocusChange = {
+                        viewModel.onEvent(AddOrdersEvent.ChangeAmountFocus(it))
+                    },
+                    isHintVisible = amountState.isHintVisible,
+                    modifier = Modifier
+                        .padding(bottom = 445.dp)
+                        .fillMaxWidth(0.75f)
+                        .height(50.dp)
+                )
+                TransparentHintField(
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    textStyle = TextStyle(color = White2),
+                    text = categoryState.text,
+                    hint = stringResource(R.string.hint_category_addordersscreen),
+                    onValueChange = {
+                        viewModel.onEvent(AddOrdersEvent.EnteredCategory(it))
+                    },
+                    onFocusChange = {
+                        viewModel.onEvent(AddOrdersEvent.ChangeCategoryFocus(it))
+                    },
+                    isHintVisible = categoryState.isHintVisible,
+                    modifier = Modifier
+                        .padding(bottom = 280.dp)
+                        .fillMaxWidth(0.75f)
+                        .height(50.dp)
+                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth(0.75f)
+                        .clip(RoundedCornerShape(15.dp))
+                        .background(DarkGray)
+                        .padding(15.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "Back Arrow"
+                    Text(
+                        text = stringResource(R.string.type_word),
+                        color = White2,
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    DefaultRadioButton(
+                        modifier = Modifier
+                            .align(Alignment.Start)
+                            .padding(start = 65.dp),
+                        text = stringResource(R.string.income_singular),
+                        selected = typeState == "income",
+                        onSelect = { viewModel.onEvent(AddOrdersEvent.ChangeType("income")) }
+                    )
+                    DefaultRadioButton(
+                        modifier = Modifier
+                            .align(Alignment.Start)
+                            .padding(start = 65.dp),
+                        text = stringResource(R.string.expense_singular),
+                        selected = typeState == "expense",
+                        onSelect = { viewModel.onEvent(AddOrdersEvent.ChangeType("expense")) }
                     )
                 }
-                Button(
-                    onClick = {
-                        viewModel.onEvent(AddOrdersEvent.SaveOrder)
-                    },
-                    colors = ButtonColors(
-                        containerColor = DarkGray,
-                        contentColor = White2,
-                        disabledContainerColor = DarkGray,
-                        disabledContentColor = White2,
-                    )
+                Spacer(modifier = Modifier.height(50.dp))
+                Row(
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 250.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Check,
-                        contentDescription = "Save Button"
-                    )
+                    Button(
+                        onClick = {
+                            navController.navigateUp()
+                        },
+                        colors = ButtonColors(
+                            containerColor = DarkGray,
+                            contentColor = White2,
+                            disabledContainerColor = DarkGray,
+                            disabledContentColor = White2,
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Back Arrow"
+                        )
+                    }
+                    Button(
+                        onClick = {
+                            viewModel.onEvent(AddOrdersEvent.SaveOrder)
+                        },
+                        colors = ButtonColors(
+                            containerColor = DarkGray,
+                            contentColor = White2,
+                            disabledContainerColor = DarkGray,
+                            disabledContentColor = White2,
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = "Save Button"
+                        )
+                    }
                 }
             }
         }
