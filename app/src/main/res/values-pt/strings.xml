@@ -30,4 +30,9 @@
     <string name="select_final_date">Selecione a Data Final</string>
     <string name="cancel_button">Cancelar</string>
     <string name="next_button">Próximo</string>
+    <string name="invalid_date">
+        A data final deve ser posterior à data inicial
+    </string>
+    <string name="deleted_order">Ordem Deletada</string>
+    <string name="undo">Desfazer</string>
 </resources>

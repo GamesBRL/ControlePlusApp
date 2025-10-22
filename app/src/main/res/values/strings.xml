@@ -29,4 +29,9 @@
     <string name="select_final_date">Select Final Date</string>
     <string name="cancel_button">Cancel</string>
     <string name="next_button">Next</string>
+    <string name="invalid_date">
+        The end date must be after the start date
+    </string>
+    <string name="deleted_order">Deleted Order</string>
+    <string name="undo">Undo</string>
 </resources>

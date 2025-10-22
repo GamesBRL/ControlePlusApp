@@ -1,5 +1,6 @@
 package com.example.controleplus.orders.presentation.orders.components
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,9 +32,14 @@ fun DateSelector(
     var startDateMillis by remember { mutableStateOf<Long?>(null) }
 
     val datePickerState = rememberDatePickerState()
+    val context = LocalContext.current
 
     DatePickerDialog(
-        onDismissRequest = onDismiss,
+        onDismissRequest = {
+            step = 1
+            startDateMillis = null
+            onDismiss()
+        },
         confirmButton = {
             TextButton(onClick = {
                 val selected = datePickerState.selectedDateMillis
@@ -40,11 +47,18 @@ fun DateSelector(
                     startDateMillis = selected
                     step = 2
                 } else {
-                    if (selected != null && startDateMillis != null && selected < startDateMillis!!) {
+                    if (selected != null && startDateMillis != null && selected <= startDateMillis!!) {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.invalid_date),
+                            Toast.LENGTH_SHORT
+                        ).show()
                         return@TextButton
                     }
 
                     onDateRangeSelected(Pair(startDateMillis, selected))
+                    step = 1
+                    startDateMillis = null
                     onDismiss()
                 }
             }) {
@@ -52,7 +66,11 @@ fun DateSelector(
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
+            TextButton(onClick = {
+                step = 1
+                startDateMillis = null
+                onDismiss()
+            }) {
                 Text(stringResource(R.string.cancel_button))
             }
         }

@@ -71,6 +71,9 @@ fun OrdersScreen(
     val state = viewModel.state.value
     val scope = rememberCoroutineScope()
 
+    val deletedOrderMessage = stringResource(R.string.deleted_order)
+    val undoMassage = stringResource(R.string.undo)
+
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
@@ -309,8 +312,8 @@ fun OrdersScreen(
                                 viewModel.onEvent(OrdersEvent.DeleteOrders(orders))
                                 scope.launch {
                                     val result = snackbarHostState.showSnackbar(
-                                        message = "Deleted Order",
-                                        actionLabel = "Undo"
+                                        message = deletedOrderMessage,
+                                        actionLabel = undoMassage
                                     )
                                     if (result == SnackbarResult.ActionPerformed) {
                                         viewModel.onEvent(OrdersEvent.RestoreOrders)
