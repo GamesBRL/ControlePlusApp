@@ -25,7 +25,6 @@ class OrdersViewModel @Inject constructor(
     val state: State<OrdersState> = _state
 
     //Variáveis de auxilio para os eventos
-    private var currentDate: Long? = null
     private var currentStartDate: Long? = null
     private var currentEndDate: Long? = null
 
@@ -138,17 +137,6 @@ class OrdersViewModel @Inject constructor(
                 }
             }
 
-            currentDate != null -> {
-                val start = currentDate!!
-                val end = currentDate!!
-
-                when (state.value.selectedType) {
-                    "income" -> getIncomeOrdersBetweenDates(start, end, order)
-                    "expense" -> getExpenseOrdersBetweenDates(start, end, order)
-                    else -> getOrdersBetweenDates(start, end, order)
-                }
-            }
-
             else -> {
                 when (state.value.selectedType) {
                     "income" -> getIncomeOrders(order)
@@ -205,65 +193,27 @@ class OrdersViewModel @Inject constructor(
 
             //Evento que limpa os filtros de Data(intervalo ou único) existentes
             is OrdersEvent.ClearDateFilters -> {
-                currentDate = null
                 currentStartDate = null
                 currentEndDate = null
                 _state.value = state.value.copy(
-                    formattedCurrentDate = "",
-                    formattedStartDate = "",
-                    formattedEndDate = ""
+                    startDate = currentStartDate,
+                    endDate = currentEndDate
                 )
                 reloadOrdersWithCurrentFilters(state.value.ordersOrder)
             }
 
-            //Evento que filtra as ORDENS por data, no caso, uma unica data
-            //respeitando o filtro por TIPO
-            is OrdersEvent.LoadByDate -> {
-                currentDate = event.date
-                _state.value = state.value.copy(
-                    formattedCurrentDate = DateFormatter.formatDate(event.date),
-                    formattedStartDate = "",
-                    formattedEndDate = ""
-                )
-
-                val start = event.date
-                val end = event.date
-
-                when (state.value.selectedType) {
-                    "income" -> getIncomeOrdersBetweenDates(
-                        start,
-                        end,
-                        OrdersOrder.Date(OrderType.Descending)
-                    )
-
-                    "expense" -> getExpenseOrdersBetweenDates(
-                        start,
-                        end,
-                        OrdersOrder.Date(OrderType.Descending)
-                    )
-
-                    else -> getOrdersBetweenDates(
-                        start,
-                        end,
-                        OrdersOrder.Date(OrderType.Descending)
-                    )
-                }
-            }
-
             //Evento que filtra as ORDENS por intervalo de datas, respeitando o filtro por TIPO
             is OrdersEvent.LoadBetweenDates -> {
-                currentDate = null
-                currentStartDate = event.startDate
-                currentEndDate = event.endDate
+                val start = DateFormatter.atStartOfDay(event.startDate)
+                val end = DateFormatter.atEndOfDay(event.endDate)
+
+                currentStartDate = start
+                currentEndDate = end
 
                 _state.value = state.value.copy(
-                    formattedStartDate = DateFormatter.formatDate(event.startDate),
-                    formattedEndDate = DateFormatter.formatDate(event.endDate),
-                    formattedCurrentDate = ""
+                    startDate = start,
+                    endDate = end
                 )
-
-                val start = event.startDate
-                val end = event.endDate
 
                 when (state.value.selectedType) {
                     "income" -> getIncomeOrdersBetweenDates(

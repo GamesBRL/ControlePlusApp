@@ -25,7 +25,7 @@ import com.example.controleplus.R
 
 @Composable
 fun DateSelector(
-    onDateRangeSelected: (Pair<Long?, Long?>) -> Unit,
+    onDateRangeSelected: (Pair<Long, Long>) -> Unit,
     onDismiss: () -> Unit
 ) {
     var step by remember { mutableIntStateOf(1) }
@@ -43,20 +43,39 @@ fun DateSelector(
         confirmButton = {
             TextButton(onClick = {
                 val selected = datePickerState.selectedDateMillis
+
+                if (selected == null) {
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.null_date),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@TextButton
+                }
+
                 if (step == 1) {
                     startDateMillis = selected
                     step = 2
                 } else {
-                    if (selected != null && startDateMillis != null && selected <= startDateMillis!!) {
+                    val start = startDateMillis
+                    if (start == null) {
                         Toast.makeText(
                             context,
-                            context.getString(R.string.invalid_date),
+                            context.getString(R.string.null_date),
                             Toast.LENGTH_SHORT
                         ).show()
                         return@TextButton
                     }
 
-                    onDateRangeSelected(Pair(startDateMillis, selected))
+                    if (selected < start) {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.invalid_end_date),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@TextButton
+                    }
+                    onDateRangeSelected(Pair(start, selected))
                     step = 1
                     startDateMillis = null
                     onDismiss()

@@ -330,17 +330,7 @@ fun OrdersScreen(
     if (state.isDateSectionVisible) {
         DateSelector(
             onDateRangeSelected = { (start, end) ->
-                if (end != null && start != null) {
-                    val endOfDay = end + (24 * 60 * 60 * 1000) - 1
-
-                    viewModel.onEvent(
-                        OrdersEvent.LoadBetweenDates(start, endOfDay)
-                    )
-                } else if (start != null) {
-                    viewModel.onEvent(
-                        OrdersEvent.LoadByDate(start)
-                    )
-                }
+                viewModel.onEvent(OrdersEvent.LoadBetweenDates(start, end))
             },
             onDismiss = { viewModel.onEvent(OrdersEvent.ToggleDateSection) }
         )

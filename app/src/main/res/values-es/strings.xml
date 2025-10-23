@@ -30,8 +30,9 @@
     <string name="select_final_date">Seleccione Fecha de Finalización</string>
     <string name="cancel_button">Cancelar</string>
     <string name="next_button">Próximo</string>
-    <string name="invalid_date">
-        La fecha de finalización debe ser posterior a la fecha de inicio.
+    <string name="null_date">La fecha no puede ser nula</string>
+    <string name="invalid_end_date">
+        La fecha de finalización no puede ser anterior a la fecha de inicio.
     </string>
     <string name="deleted_order">Orden Eliminada</string>
     <string name="undo">Deshacer</string>

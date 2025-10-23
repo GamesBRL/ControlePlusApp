@@ -9,9 +9,8 @@ data class OrdersState(
     val ordersOrder: OrdersOrder = OrdersOrder.Date(OrderType.Descending),
     val selectedType: String = "all",
     val selectedOrder: String = "date",
-    val formattedStartDate: String = "",
-    val formattedEndDate: String = "",
-    val formattedCurrentDate: String = "",
+    val startDate: Long? = null,
+    val endDate: Long? = null,
     val isTypeSectionVisible: Boolean = false,
     val isOrderSectionVisible: Boolean = false,
     val isDateSectionVisible: Boolean = false

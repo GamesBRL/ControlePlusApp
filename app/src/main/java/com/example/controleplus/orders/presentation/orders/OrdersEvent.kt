@@ -7,10 +7,8 @@ sealed class OrdersEvent {
 
     data class Order(val ordersOrder: OrdersOrder) : OrdersEvent()
     data class DeleteOrders(val orders: Orders) : OrdersEvent()
-    data class LoadByDate(val date: Long) : OrdersEvent()
     data class LoadBetweenDates(val startDate: Long, val endDate: Long) :
         OrdersEvent()
-
     object RestoreOrders : OrdersEvent()
     object ClearDateFilters : OrdersEvent()
     object LoadAll : OrdersEvent()
