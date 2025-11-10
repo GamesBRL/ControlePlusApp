@@ -50,6 +50,7 @@ import androidx.navigation.NavController
 import com.example.controleplus.R
 import com.example.controleplus.core.components.BottomNavigationBar
 import com.example.controleplus.core.util.bottomNavItems
+import com.example.controleplus.orders.domain.util.OrderType
 import com.example.controleplus.orders.domain.util.OrdersOrder
 import com.example.controleplus.orders.presentation.orders.components.DateSelector
 import com.example.controleplus.orders.presentation.orders.components.OrderItem
@@ -290,7 +291,11 @@ fun OrdersScreen(
                     }
                     Button(
                         colors = ButtonDefaults.buttonColors(LightGray2),
-                        onClick = { viewModel.onEvent(OrdersEvent.ClearDateFilters) }
+                        onClick = {
+                            viewModel.onEvent(OrdersEvent.ClearDateFilters)
+                            viewModel.onEvent(OrdersEvent.LoadAll)
+                            viewModel.onEvent(OrdersEvent.Order(OrdersOrder.Date(OrderType.Descending)))
+                        }
                     )
                     {
                         Icon(

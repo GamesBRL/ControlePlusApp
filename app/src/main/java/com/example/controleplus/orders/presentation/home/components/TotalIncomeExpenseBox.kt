@@ -53,7 +53,7 @@ fun TotalIncomeExpenseBox(
             .background(DarkGray)
     ) {
 
-        val padding = if (CurrencyUtils.parseCurrencyToDouble(amount) > 1000000) 10.dp else 5.dp
+        val padding = if (CurrencyUtils.parseCurrencyToDouble(amount) >= 1000000.00) 10.dp else 5.dp
 
         Column(
             verticalArrangement = Arrangement.Center,

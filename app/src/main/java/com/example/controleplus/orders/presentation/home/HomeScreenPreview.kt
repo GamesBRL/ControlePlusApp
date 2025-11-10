@@ -100,7 +100,7 @@ fun HomeScreenPreview() {
                 ) {
                     TotalIncomeExpenseBox(
                         "income",
-                        "1000000.0",
+                        "R$ 1.000.000,00",
                         modifier = Modifier.size(135.dp)
                     )
                     TotalIncomeExpenseBox(
